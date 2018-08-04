@@ -5,14 +5,27 @@ import TodoList from './TodoList';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { list: [] };
+    this.state = { list: [], };
 
-    this.addTodoList = this.addTodoList.bind(this);
+    this.addTodo = this.addTodo.bind(this);
+    this.deleteTodo = this.deleteTodo.bind(this);
   }
 
-  addTodoList(value) {
+
+  addTodo(value) {
     const list = this.state.list;
     list.push(value);
+    this.setState({ list: list });
+  }
+
+  modifyTodo(index) {
+    const todoModify = this.state.list[index];
+
+  }
+
+  deleteTodo(index) {
+    const list = this.state.list;
+    list.splice(index, 1);
     this.setState({ list: list });
   }
 
@@ -21,8 +34,9 @@ class App extends Component {
 
     return (
       <div>
-        <AddTodo addTodoList={this.addTodoList} />
-        <TodoList list={this.state.list} />
+        <h1>Super Awesome Todo List</h1>
+        <AddTodo addTodo={this.addTodo} />
+        <TodoList list={this.state.list} deleteTodo={this.deleteTodo} />
       </div>
     );
   }
