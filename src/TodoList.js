@@ -1,19 +1,23 @@
 import React from 'react';
 
 const TodoList = (props) => {
+  const todos = [];
+  props.list.forEach((todo, index) => {
+    if (todo.completed === false) {
+      todos.push(
+        <div key={`todo${index}`}>
+          {todo.todoText}
+          <button onClick={() => props.completeTodo(index)}>Complete</button>
+          <button onClick={() => props.modifyTodo(index)}>Modify</button>
+          <button onClick={() => props.deleteTodo(index)}>Delete</button>
+        </div>
+      );
+    }
+  });
   return (
     <div>
       <h3>My Current Todos</h3>
-      {props.list.map((todo, id) => {
-        return (
-          <div key={`todo${id}`}>
-            {todo.todoText} 
-            <button onClick={() => props.completeTodo(id)}>Complete</button>
-            <button onClick={() => props.modifyTodo(id)}>Modify</button> 
-            <button onClick={() => props.deleteTodo(id)}>Delete</button> 
-          </div>
-        )
-      })}
+      {todos}
     </div>
   )
 }

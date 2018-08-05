@@ -5,10 +5,9 @@ import CompletedTodoList from './CompletedTodoList';
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = { 
       list: [],
-      completedList: [],
       inputText: ''
     };
 
@@ -27,48 +26,43 @@ class App extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.addTodo(this.state.inputText);
-    
   }
 
-  addTodo(value) {
-    const list = this.state.list;
+  addTodo(todoText) {
+    const { list } = this.state;
     const todo = {
-      todoText: value,
+      todoText,
       completed: false
     }
     list.push(todo);
     this.setState({ 
-      list: list, 
+      list, 
       inputText: ''
     });
   }
 
   modifyTodo(index) {
-    const list = this.state.list;
-    const todoText = list[index].todoText;
+    const { list } = this.state;
+    const { todoText }  = list[index];
     list.splice(index, 1);
     this.setState({
-      list: list,
+      list,
       inputText: todoText
     });
   }
 
   deleteTodo(index) {
-    const list = this.state.list;
+    const { list } = this.state;
     list.splice(index, 1);
-    this.setState({ list: list });
+    this.setState({ list });
   }
 
   completeTodo(index) {
-    const list = this.state.list;
-    const completedList = this.state.completedList;
-    const todo = {...list[index]};
-    list.splice(index, 1);
-    completedList.push(todo);
-    this.setState({
-      list,
-      completedList,
-    });
+    let { list } = this.state;
+    const todo = list[index]
+    todo.completed = true;
+    list = [...list.slice(0, index), {...todo}, ...list.slice(index + 1)]
+    this.setState({ list });
   }
 
   render() {
@@ -86,7 +80,7 @@ class App extends Component {
           modifyTodo={this.modifyTodo} 
           completeTodo={this.completeTodo}
           />
-        <CompletedTodoList  completedList={this.state.completedList} />
+        <CompletedTodoList  list={this.state.list} />
       </div>
     );
   }

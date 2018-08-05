@@ -2,9 +2,12 @@ import React from 'react';
 
 const  CompletedTodoList = props => {
 
-  const completedTodos = props.completedList.map((todo, index) => (
-    <li key={`todo${index}`}>{todo.todoText}</li>
-  ))
+  const completedTodos = [];
+  props.list.forEach((todo, index) => {
+    if (todo.completed === true) {
+      completedTodos.push(<li key={`todo${index}`}>{todo.todoText}</li>);
+    }
+});
   
   return (
     <div>
