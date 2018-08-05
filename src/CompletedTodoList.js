@@ -1,9 +1,10 @@
 import React from 'react';
 
 const  CompletedTodoList = props => {
+
   const completedTodos = props.completedList.map((todo, index) => (
-  <li key={`todo${index}`}>{todo.todoText}</li>
-))
+    <li key={`todo${index}`}>{todo.todoText}</li>
+  ))
   
   return (
     <div>
@@ -14,5 +15,6 @@ const  CompletedTodoList = props => {
     </div>
   );
 }
+
 
 export default CompletedTodoList;
